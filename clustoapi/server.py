@@ -465,6 +465,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey1",
                     "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0001"
                 }
             ],
             "contents": [],
@@ -485,6 +492,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey2",
                     "value": "value2"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0002"
                 }
             ],
             "contents": [],
@@ -600,6 +614,13 @@ Examples:
                 "number": null,
                 "subkey": "subkey1",
                 "value": "value1"
+            },
+            {
+                "datatype": "string",
+                "key": "system",
+                "number": null,
+                "subkey": "serial",
+                "value": "SER0001"
             }
         ],
         "contents": [],
@@ -681,6 +702,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey1",
                     "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0001"
                 }
             ],
             "contents": [],
@@ -701,6 +729,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey2",
                     "value": "value2"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0002"
                 }
             ],
             "contents": [],
@@ -782,6 +817,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey1",
                     "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0001"
                 }
             ],
             "contents": [],
@@ -802,6 +844,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey2",
                     "value": "value2"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0002"
                 }
             ],
             "contents": [],
