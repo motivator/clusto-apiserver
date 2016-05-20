@@ -70,14 +70,16 @@ class TestingServer(threading.Thread):
                     'driver': clusto.drivers.servers.BasicServer,
                     'member_of': ['singlepool', 'multipool'],
                     'attr_list': [
-                        {'key': 'key1', 'subkey': 'subkey1', 'value': 'value1'}
+                        {'key': 'key1', 'subkey': 'subkey1', 'value': 'value1'},
+                        {'key': 'system', 'subkey': 'serial', 'value': 'SER0001'}
                     ]
                 },
                 'testserver2': {
                     'driver': clusto.drivers.servers.BasicServer,
                     'member_of': ['multipool'],
                     'attr_list': [
-                        {'key': 'key1', 'subkey': 'subkey2', 'value': 'value2'}
+                        {'key': 'key1', 'subkey': 'subkey2', 'value': 'value2'},
+                        {'key': 'system', 'subkey': 'serial', 'value': 'SER0002'}
                     ]
                 },
                 'testnames': {

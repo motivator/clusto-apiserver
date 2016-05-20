@@ -844,6 +844,85 @@ Examples:
         return util.dumps('%s' % (e,), 500)
 
 
+@root_app.get('/by-serial')
+def get_by_serial():
+    """
+One of the main ``clusto`` operations. Parameters:
+
+* Required: the ``serial`` parameter
+
+Examples:
+
+.. code:: bash
+
+    $ ${get} ${server_url}/by-serial
+    "Provide a serial number to use get_by_serial"
+    HTTP: 412
+    Content-type: application/json
+
+    $ ${get} -d 'serial=noserial' ${server_url}/by-serial
+    []
+    HTTP: 200
+    Content-type: application/json
+
+    $ ${get} -d 'serial=SER0001' ${server_url}/by-serial
+    [
+        "/basicserver/testserver1"
+    ]
+    HTTP: 200
+    Content-type: application/json
+
+    $ ${get} -H 'Clusto-Mode: expanded' -d 'serial=SER0001' ${server_url}/by-serial
+    [
+        {
+            "attrs": [
+                {
+                    "datatype": "string",
+                    "key": "key1",
+                    "number": null,
+                    "subkey": "subkey1",
+                    "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "system",
+                    "number": null,
+                    "subkey": "serial",
+                    "value": "SER0001"
+                }
+            ],
+            "contents": [],
+            "driver": "basicserver",
+            "ips": [],
+            "name": "testserver1",
+            "parents": [
+                "/pool/singlepool",
+                "/pool/multipool"
+            ],
+            "type": "server"
+        }
+    ]
+    HTTP: 200
+    Content-type: application/json
+
+"""
+    objs = []
+    serial = bottle.request.params.get('serial')
+    if not serial:
+        return util.dumps('Provide a serial number to use get_by_serial', 412)
+
+    mode = bottle.request.headers.get('Clusto-Mode', default='compact')
+
+    try:
+        ents = clusto.get_by_serial(serial)
+        results = []
+        for ent in ents:
+            results.append(util.show(ent, mode))
+        return util.dumps(results)
+    except TypeError as te:
+        return util.dumps('%s' % (te,), 409)
+
+
 def _configure(config={}, configfile=None, init_data={}):
     """
 Configure the root app
