@@ -465,6 +465,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey1",
                     "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "port-nic-eth",
+                    "number": 1,
+                    "subkey": "mac",
+                    "value": "00:01:02:03:04:05"
                 }
             ],
             "contents": [],
@@ -600,6 +607,13 @@ Examples:
                 "number": null,
                 "subkey": "subkey1",
                 "value": "value1"
+            },
+            {
+                "datatype": "string",
+                "key": "port-nic-eth",
+                "number": 1,
+                "subkey": "mac",
+                "value": "00:01:02:03:04:05"
             }
         ],
         "contents": [],
@@ -681,6 +695,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey1",
                     "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "port-nic-eth",
+                    "number": 1,
+                    "subkey": "mac",
+                    "value": "00:01:02:03:04:05"
                 }
             ],
             "contents": [],
@@ -708,7 +729,7 @@ Examples:
             "ips": [],
             "name": "testserver2",
             "parents": [
-            "/pool/multipool"
+                "/pool/multipool"
             ],
             "type": "server"
         }
@@ -782,6 +803,13 @@ Examples:
                     "number": null,
                     "subkey": "subkey1",
                     "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "port-nic-eth",
+                    "number": 1,
+                    "subkey": "mac",
+                    "value": "00:01:02:03:04:05"
                 }
             ],
             "contents": [],
@@ -842,6 +870,85 @@ Examples:
         return util.dumps('%s' % (le,), 404)
     except Exception as e:
         return util.dumps('%s' % (e,), 500)
+
+
+@root_app.get('/by-mac')
+def get_by_mac():
+    """
+One of the main ``clusto`` operations. Parameters:
+
+* Required: object with given ``mac`` address
+
+Examples:
+
+.. code:: bash
+
+    $ ${get} ${server_url}/by-mac
+    "Provide a mac address to use on get_by_mac"
+    HTTP: 412
+    Content-type: application/json
+
+    $ ${get} -d 'mac=nomac' ${server_url}/by-mac
+    []
+    HTTP: 200
+    Content-type: application/json
+
+    $ ${get} -d 'mac=00:01:02:03:04:05' ${server_url}/by-mac
+    [
+        "/basicserver/testserver1"
+    ]
+    HTTP: 200
+    Content-type: application/json
+
+    $ ${get} -H 'Clusto-Mode: expanded' -d 'mac=00:01:02:03:04:05' ${server_url}/by-mac
+    [
+        {
+            "attrs": [
+                {
+                    "datatype": "string",
+                    "key": "key1",
+                    "number": null,
+                    "subkey": "subkey1",
+                    "value": "value1"
+                },
+                {
+                    "datatype": "string",
+                    "key": "port-nic-eth",
+                    "number": 1,
+                    "subkey": "mac",
+                    "value": "00:01:02:03:04:05"
+                }
+            ],
+            "contents": [],
+            "driver": "basicserver",
+            "ips": [],
+            "name": "testserver1",
+            "parents": [
+                "/pool/singlepool",
+                "/pool/multipool"
+            ],
+            "type": "server"
+        }
+    ]
+    HTTP: 200
+    Content-type: application/json
+
+"""
+    objs = []
+    mac = bottle.request.params.get('mac')
+    if not mac:
+        return util.dumps('Provide a mac address to use on get_by_mac', 412)
+
+    mode = bottle.request.headers.get('Clusto-Mode', default='compact')
+
+    try:
+        ents = clusto.get_by_mac(mac)
+        results = []
+        for ent in ents:
+            results.append(util.show(ent, mode))
+        return util.dumps(results)
+    except TypeError as te:
+        return util.dumps('%s' % (te,), 409)
 
 
 def _configure(config={}, configfile=None, init_data={}):

@@ -70,7 +70,8 @@ class TestingServer(threading.Thread):
                     'driver': clusto.drivers.servers.BasicServer,
                     'member_of': ['singlepool', 'multipool'],
                     'attr_list': [
-                        {'key': 'key1', 'subkey': 'subkey1', 'value': 'value1'}
+                        {'key': 'key1', 'subkey': 'subkey1', 'value': 'value1'},
+                        {'key': 'port-nic-eth', 'subkey': 'mac', 'number': 1, 'value': '00:01:02:03:04:05'}
                     ]
                 },
                 'testserver2': {
