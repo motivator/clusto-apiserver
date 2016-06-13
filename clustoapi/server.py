@@ -750,13 +750,14 @@ One of the main ``clusto`` operations. Parameters:
 * Required: the ``key`` parameter
 * Optional: the ``subkey`` parameter
 * Optional: the ``value`` parameter
+* Optional: the ``number`` parameter
 
 Examples:
 
 .. code:: bash
 
     $ ${get} ${server_url}/by-attr
-    "Provide a key to use get_by_attr"
+    "Provide one or more of key, subkey, value, number to use get_by_attr"
     HTTP: 412
     Content-type: application/json
 
@@ -818,7 +819,7 @@ Examples:
     Content-type: application/json
 
 """
-    params = ['key', 'subkey', 'value']
+    params = ['key', 'subkey', 'value', 'number']
     kwargs = {}
     for param in params:
         val = bottle.request.params.get(param)
@@ -826,7 +827,7 @@ Examples:
             kwargs[param] = val
 
     if not kwargs.get('key'):
-        return util.dumps('Provide a key to use get_by_attr', 412)
+        return util.dumps('Provide one or more of key, subkey, value, number to use get_by_attr', 412)
 
     mode = bottle.request.headers.get('Clusto-Mode', default='compact')
 
