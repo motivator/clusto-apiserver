@@ -756,7 +756,7 @@ Examples:
 .. code:: bash
 
     $ ${get} ${server_url}/by-attr
-    "Provide a key to use get_by_attr"
+    "Provide at least one of key, subkey, value to use get_by_attr"
     HTTP: 412
     Content-type: application/json
 
@@ -825,8 +825,8 @@ Examples:
         if val:
             kwargs[param] = val
 
-    if not kwargs.get('key'):
-        return util.dumps('Provide a key to use get_by_attr', 412)
+    if not kwargs:
+        return util.dumps('Provide at least one of key, subkey, value to use get_by_attr', 412)
 
     mode = bottle.request.headers.get('Clusto-Mode', default='compact')
 
