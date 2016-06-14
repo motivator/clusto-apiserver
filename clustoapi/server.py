@@ -819,10 +819,6 @@ Examples:
     Content-type: application/json
 
 """
-            try:
-                attr['number'] = int(attr['number'])
-            except ValueError as ve:
-                return util.dumps('%s' % (ve,), 400)
 
     params = ['key', 'subkey', 'value', 'number']
     kwargs = {}
