@@ -832,6 +832,8 @@ Examples:
                     return util.dumps('%s' % (ve,), 400)
             else:
                 kwargs[param] = val
+        elif val is None and param == 'number':
+            kwargs[param] = val
 
     if not kwargs:
         return util.dumps('Provide one or more of key, subkey, value, number to use get_by_attr', 412)
