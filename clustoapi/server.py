@@ -819,14 +819,25 @@ Examples:
     Content-type: application/json
 
 """
+            try:
+                attr['number'] = int(attr['number'])
+            except ValueError as ve:
+                return util.dumps('%s' % (ve,), 400)
+
     params = ['key', 'subkey', 'value', 'number']
     kwargs = {}
     for param in params:
         val = bottle.request.params.get(param)
         if val:
-            kwargs[param] = val
+            if param == 'number':
+                try:
+                    kwargs[param] = int(val)
+                except ValueError as ve:
+                    return util.dumps('%s' % (ve,), 400)
+            else:
+                kwargs[param] = val
 
-    if not kwargs.get('key'):
+    if not kwargs:
         return util.dumps('Provide one or more of key, subkey, value, number to use get_by_attr', 412)
 
     mode = bottle.request.headers.get('Clusto-Mode', default='compact')
